@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 12
+names: ['airpods max', 'box', 'boxing glove', 'mouse', 'pillow', 'pinkpillow', 'power bank', 'rubik', 'scissors', 'sushi', 'water bottle', 'wd-40']
+
+roboflow:
+  workspace: jayzza-1234
+  project: box-uqiot
+  version: 5
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/jayzza-1234/box-uqiot/dataset/5

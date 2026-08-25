@@ -1,0 +1,9 @@
+venv/
+env/
+__pycache__/
+*.pyc
+*.swp
+.lgd-nfy0
+hand_landmarker.task.1
+hand_landmarker.task.2
+hand_landmarker.task.3

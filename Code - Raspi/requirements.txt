@@ -1,0 +1,11 @@
+numpy==2.4.6
+opencv-python==5.0.0.93
+mediapipe==0.10.9
+RPi.GPIO==0.7.1
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.13.0+cpu
+torchvision==0.28.0+cpu
+ultralytics==8.4.121
+RPLCD==1.4.0
+smbus2==0.6.1
+rpi_lcd==0.0.3

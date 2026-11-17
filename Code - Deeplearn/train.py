@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-dataset = pd.read_csv("code/train.csv")
+dataset = pd.read_csv("M.5-Classwork/Code - Deeplearn/train_clean.csv")
 # print(dataset.shape)
 # print(dataset.head())
 
@@ -16,7 +16,7 @@ bad_frac = bad.sum(axis=1) / len(pixel_cols)
 dataset = dataset[bad_frac <= 0.05].copy()           # drop rows that are mostly anomalous
 dataset[pixel_cols] = dataset[pixel_cols].clip(lower=0, upper=255)  # patch the rest
 
-dataset.to_csv("code/train_clean.csv", index=False)
+dataset.to_csv("M.5-Classwork/Code - Deeplearn/train_clean.csv", index=False)
 
 y_train = dataset['label'] # Lable
 x_train = dataset.drop('label', axis=1) # Featrue
@@ -58,16 +58,19 @@ def get_predict(A2):   # winner class = highest probability after softmax
 def get_accuracy(predict, Y):
     return np.sum(get_predict(predict) == Y) / len(Y)
 
+def init_params():
+    W1 = np.random.rand(10, 784) - 0.5
+    b1 = np.random.rand(10, 1) - 0.5
+    W2 = np.random.rand(10, 10) - 0.5
+    b2 = np.random.rand(10, 1) - 0.5
+    return W1, b1, W2, b2
+
 class NeuralNet:
     def __init__(self, n_in=784, n_hidden=10, n_out=10):
         # W = per-input "volume knob", how much each pixel counts toward a neuron firing.
         # b = per-neuron trigger threshold shift, not tied to any single input.
-        # both start random/zero, both get reshaped by training below.
-        rng = np.random.default_rng(42)
-        self.W1 = rng.standard_normal((n_hidden, n_in)) * 0.01
-        self.b1 = np.zeros((n_hidden, 1))
-        self.W2 = rng.standard_normal((n_out, n_hidden)) * 0.01
-        self.b2 = np.zeros((n_out, 1))
+        # both start random here, uniform in [-0.5, 0.5], reshaped by training below.
+        self.W1, self.b1, self.W2, self.b2 = init_params()
 
     # ===== STEP 3: FORWARD PROP =====
     # push image through: weighted sum (W.X+b) then activation, layer by layer.
@@ -114,5 +117,7 @@ class NeuralNet:
 X = x_train.values.T   # (784, m) — features as rows, samples as columns
 Y = y_train.values     # (m,)
 
+LEARNING_RATE = 0.03   # step size for gradient descent, tune if accuracy stalls/explodes
+
 model = NeuralNet()
-model.fit(X, Y, alpha=0.1, n_iters=500)
+model.fit(X, Y, alpha=LEARNING_RATE, n_iters=1000)

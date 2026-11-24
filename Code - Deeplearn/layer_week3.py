@@ -3,7 +3,7 @@ import numpy as np
 import time
 from sklearn.model_selection import train_test_split
 
-dataset = pd.read_csv("M.5-Classwork/Code - Deeplearn/train.csv")
+dataset = pd.read_csv("Org - m5/Code - Deeplearn/train.csv")
 
 y = dataset['label']
 x = dataset.drop('label', axis=1) / 255.0
@@ -107,12 +107,11 @@ BATCH_SIZE = 128
 N_EPOCHS = 200
 TARGET_ACC = 0.85
 
-# (layer_count, hidden_sizes) pairs per the slide: 1 layer/10 nodes, 2 layers/100
-# nodes each, 3 layers/1000 nodes each.
+# per the slide: layers 1,2,3 x nodes-per-layer 10,100 (all 6 combos)
 CONFIGS = {
-    '1x10':    [10],
-    '2x100':   [100, 100],
-    '3x1000':  [1000, 1000, 1000],
+    f'{L}x{N}': [N] * L
+    for L in (1, 2, 3)
+    for N in (10, 100)
 }
 
 results = {}
